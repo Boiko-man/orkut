@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>orkut.com.br - Início</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Lucida Grande / Tahoma alternative -->
+    <link href="https://fonts.googleapis.com/css2?family=Verdana:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Verdana', Arial, sans-serif;
+            font-size: 11px;
+            background-color: #E4EEF6;
+            color: #333333;
+        }
+
+        /* Classic Orkut Color Palette */
+        .orkut-header-bg {
+            background: linear-gradient(to bottom, #ED2578 0%, #CE1B63 100%);
+        }
+        .orkut-nav-sub {
+            background-color: #BDCDE5;
+            border-bottom: 1px solid #99AECB;
+        }
+        .orkut-card-header {
+            background: linear-gradient(to bottom, #EBF2FA 0%, #D4E3F3 100%);
+            border-bottom: 1px solid #B4CBE4;
+            color: #003366;
+            font-weight: bold;
+        }
+        .orkut-border {
+            border: 1px solid #B4CBE4;
+        }
+        .orkut-link {
+            color: #204080;
+            text-decoration: none;
+        }
+        .orkut-link:hover {
+            color: #ED2578;
+            text-decoration: underline;
+        }
+        
+        /* Retro Orkut Buttons */
+        .orkut-btn {
+            background: linear-gradient(to bottom, #FFFFFF 0%, #E3EBF5 100%);
+            border: 1px solid #A2C1E8;
+            border-radius: 3px;
+            color: #003366;
+            font-weight: bold;
+            font-size: 11px;
+            padding: 3px 10px;
+            cursor: pointer;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.08);
+            transition: all 0.15s ease;
+        }
+        .orkut-btn:hover {
+            background: linear-gradient(to bottom, #F4F8FC 0%, #D8E5F5 100%);
+            border-color: #729BCC;
+            color: #ED2578;
+        }
+        .orkut-btn-pink {
+            background: linear-gradient(to bottom, #F05193 0%, #D81E6F 100%);
+            border: 1px solid #B01053;
+            color: #FFFFFF;
+        }
+        .orkut-btn-pink:hover {
+            background: linear-gradient(to bottom, #FF6EA9 0%, #E22B7C 100%);
+            color: #FFFFFF;
+        }
+
+        /* Meters Styling */
+        .meter-icon {
+            display: inline-block;
+            margin-right: 2px;
+        }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #E4EEF6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #A2C1E8;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #729BCC;
+        }
+
+        /* Fortune Cookie Animation */
+        @keyframes cookieUnfold {
+            0% { transform: scale(0.8) rotate(-5deg); opacity: 0; }
+            50% { transform: scale(1.05) rotate(2deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        .animate-cookie {
+            animation: cookieUnfold 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <header class="w-full">
+        <!-- Main Magenta Pink Header -->
+        <div class="orkut-header-bg px-4 py-2 flex flex-wrap items-center justify-between text-white shadow-sm">
+            <div class="flex items-center space-x-3">
+                <!-- Logo -->
+                <a href="#" onclick="switchTab('perfil')" class="flex items-baseline font-bold tracking-tighter hover:opacity-95">
+                    <span class="text-2xl lowercase text-white font-sans">orkut</span>
+                    <span class="text-xs text-pink-200 ml-0.5 font-normal">.com.br</span>
+                </a>
+                <span class="hidden md:inline text-pink-200 opacity-60">|</span>
+                <span class="hidden md:inline text-xs text-pink-100">A rede social do momento</span>
+            </div>
+
+            <!-- Header Search Bar -->
+            <div class="flex items-center space-x-2 my-1 md:my-0">
+                <div class="relative flex items-center">
+                    <input type="text" id="global-search" placeholder="pesquisar no orkut..." 
+                            class="px-2 py-0.5 text-xs text-gray-800 rounded-sm border border-pink-700 w-40 sm:w-56 focus:outline-none focus:ring-1 focus:ring-white">
+                    <button onclick="handleGlobalSearch()" class="ml-1 bg-pink-800 hover:bg-pink-900 text-white px-2 py-0.5 rounded-sm text-xs border border-pink-900">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- User Auth Mock Options -->
+            <div class="flex items-center space-x-3 text-xs text-pink-100">
+                <span>Olá, <strong id="header-user-name" class="text-white">teupaidecalcinha</strong></span>
+                <span>|</span>
+                <a href="#" onclick="openModal('edit-profile-modal')" class="hover:underline text-white">configurações</a>
+                <span>|</span>
+                <a href="#" onclick="resetAllData()" class="hover:underline text-pink-200" title="Resetar dados salvos no navegador">resetar demo</a>
+            </div>
+        </div>
+
+        <!-- Light Blue Sub-header Navbar -->
+        <nav class="orkut-nav-sub px-4 py-1.5 flex flex-wrap items-center justify-between text-xs font-bold text-slate-800 shadow-inner">
+            <div class="flex flex-wrap items-center space-x-3 sm:space-x-5 py-0.5">
+                <a href="#" onclick="switchTab('perfil')" id="nav-perfil" class="orkut-link flex items-center gap-1 font-bold">
+                    <i class="fas fa-user text-sky-700"></i> Início
+                </a>
+                <a href="#" onclick="switchTab('perfil')" id="nav-meuperfil" class="orkut-link flex items-center gap-1">
+                    <i class="fas fa-id-card text-sky-700"></i> Perfil
+                </a>
+                <a href="#" onclick="switchTab('recados')" id="nav-recados" class="orkut-link flex items-center gap-1">
+                    <i class="fas fa-envelope text-sky-700"></i> Recados <span id="recados-count-badge" class="bg-pink-600 text-white rounded-full px-1.5 py-0.2 text-[10px]">3</span>
+                </a>
+                <a href="#" onclick="switchTab('depoimentos')" id="nav-depoimentos" class="orkut-link flex items-center gap-1">
+                    <i class="fas fa-heart text-sky-700"></i> Depoimentos <span id="depo-pending-badge" class="bg-amber-500 text-white rounded-full px-1.5 py-0.2 text-[10px] hidden">1</span>
+                </a>
+                <a href="#" onclick="switchTab('comunidades')" id="nav-comunidades" class="orkut-link flex items-center gap-1">
+                    <i class="fas fa-users text-sky-700"></i> Comunidades
+                </a>
+                <a href="#" onclick="switchTab('amigos')" id="nav-amigos" class="orkut-link flex items-center gap-1">
+                    <i class="fas fa-user-friends text-sky-700"></i> Amigos
+                </a>
+                <a href="#" onclick="switchTab('sorte')" id="nav-sorte" class="orkut-link flex items-center gap-1 text-pink-700 font-bold">
+                    <i class="fas fa-cookie-bite text-amber-600"></i> Sorte do Dia
+                </a>
+            </div>
+            <div class="text-[10px] text-slate-600 hidden lg:block">
+                <i class="fas fa-lock text-slate-500"></i> Conexão Segura
+            </div>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-6xl w-full mx-auto p-2 sm:p-4 flex-1 grid grid-cols-1 md:grid-cols-12 gap-4">
+
+        <!-- LEFT SIDEBAR (MEMBER PROFILE CARD) -->
+        <aside class="md:col-span-3 space-y-3">
+            <!-- User Photo & Quick Info Card -->
+            <div class="bg-white orkut-border p-3 rounded-sm shadow-sm">
+                <div class="text-center relative group">
+                    <img id="sidebar-photo" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80" 
+                         alt="Foto de Perfil" class="w-full h-44 object-cover border border-slate-300 rounded-sm mb-2 shadow-inner">
+                    <button onclick="openModal('edit-photo-modal')" class="absolute bottom-3 right-2 bg-slate-900 bg-opacity-75 text-white text-[10px] px-2 py-0.5 rounded opacity-90 hover:opacity-100 transition">
+                        <i class="fas fa-camera"></i> trocar
+                    </button>
+                </div>
+
+                <h1 id="sidebar-name" class="font-bold text-sm text-pink-700 text-center leading-tight">Juliana Paes</h1>
+                <p id="sidebar-status-text" class="text-[10px] text-gray-600 text-center italic mt-1 border-b border-sky-100 pb-2">
+                    "Ouvindo CPM 22 🎸 e pensando nas férias!"
+                </p>
+
+                <!-- Profile Attributes / Meters -->
+                <div class="mt-2 space-y-1 text-[11px] text-slate-700">
+                    <div class="flex items-center justify-between">
+                        <span class="text-slate-500">confiável:</span>
+                        <span id="meter-trust" title="100% Confiável">
+                            <i class="fas fa-smile text-amber-400 text-xs"></i>
+                            <i class="fas fa-smile text-amber-400 text-xs"></i>
+                            <i class="fas fa-smile text-amber-400 text-xs"></i>
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-slate-500">legal:</span>
+                        <span id="meter-cool" title="Muito Legal">
+                            <i class="fas fa-ice-cream text-sky-400 text-xs"></i>
+                            <i class="fas fa-ice-cream text-sky-400 text-xs"></i>
+                            <i class="fas fa-ice-cream text-sky-400 text-xs"></i>
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-slate-500">sexy:</span>
+                        <span id="meter-sexy" title="Super Sexy">
+                            <i class="fas fa-heart text-pink-500 text-xs"></i>
+                            <i class="fas fa-heart text-pink-500 text-xs"></i>
+                            <i class="fas fa-heart text-pink-500 text-xs"></i>
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between border-t border-slate-100 pt-1">
+                        <span class="text-slate-500">fã de carteirinha:</span>
+                        <span class="font-bold text-amber-600 flex items-center gap-1">
+                            <i class="fas fa-star text-amber-400"></i> <span id="meter-fans">85%</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Navigation Quick Links -->
+                <div class="mt-3 pt-2 border-t border-slate-200 space-y-1 text-xs">
+                    <a href="#" onclick="switchTab('recados')" class="orkut-link block flex justify-between items-center">
+                        <span><i class="fas fa-book text-sky-600 w-4"></i> recados</span>
+                        <strong id="sidebar-scraps-count" class="text-slate-600">12</strong>
+                    </a>
+                    <a href="#" onclick="switchTab('depoimentos')" class="orkut-link block flex justify-between items-center">
+                        <span><i class="fas fa-comment-dots text-sky-600 w-4"></i> depoimentos</span>
+                        <strong id="sidebar-depo-count" class="text-slate-600">5</strong>
+                    </a>
+                    <a href="#" onclick="switchTab('amigos')" class="orkut-link block flex justify-between items-center">
+                        <span><i class="fas fa-users text-sky-600 w-4"></i> amigos</span>
+                        <strong id="sidebar-friends-count" class="text-slate-600">128</strong>
+                    </a>
+                    <a href="#" onclick="switchTab('comunidades')" class="orkut-link block flex justify-between items-center">
+                        <span><i class="fas fa-cubes text-sky-600 w-4"></i> comunidades</span>
+                        <strong id="sidebar-comm-count" class="text-slate-600">42</strong>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Mini Friends Box -->
+            <div class="bg-white orkut-border rounded-sm shadow-sm overflow-hidden">
+                <div class="orkut-card-header px-2 py-1.5 flex justify-between items-center">
+                    <span>meus amigos (<span id="mini-friends-total">128</span>)</span>
+                    <a href="#" onclick="switchTab('amigos')" class="orkut-link text-[10px] font-normal">ver todos</a>
+                </div>
+                <div class="p-2 grid grid-cols-3 gap-1.5" id="mini-friends-grid">
+                    <!-- Dynamic rendering via JS -->
+                </div>
+            </div>
+
+            <!-- Mini Communities Box -->
+            <div class="bg-white orkut-border rounded-sm shadow-sm overflow-hidden">
+                <div class="orkut-card-header px-2 py-1.5 flex justify-between items-center">
+                    <span>minhas comunidades (<span id="mini-comm-total">42</span>)</span>
+                    <a href="#" onclick="switchTab('comunidades')" class="orkut-link text-[10px] font-normal">ver todas</a>
+                </div>
+                <div class="p-2 grid grid-cols-3 gap-1.5 text-center" id="mini-comm-grid">
+                    <!-- Dynamic rendering via JS -->
+                </div>
+            </div>
+        </aside>
+
+        <!-- RIGHT MAIN CONTENT CONTAINER -->
+        <section class="md:col-span-9 space-y-4">
+
+            <!-- TAB 1: PERFIL OVERVIEW -->
+            <div id="tab-perfil" class="tab-content space-y-4">
+                <!-- Profile Header Banner -->
+                <div class="bg-white orkut-border p-3 rounded-sm shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                    <div>
+                        <h2 id="profile-title-name" class="text-lg font-bold text-pink-700">Juliana Paes</h2>
+                        <p class="text-slate-600 text-xs">
+                            <span id="profile-location">São Paulo, SP, Brasil</span> | 
+                            <span id="profile-relationship">Em um relacionamento sério</span>
+                        </p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="openModal('edit-profile-modal')" class="orkut-btn flex items-center gap-1">
+                            <i class="fas fa-edit text-sky-700"></i> Editar Perfil
+                        </button>
+                        <button onclick="switchTab('recados')" class="orkut-btn-pink orkut-btn flex items-center gap-1">
+                            <i class="fas fa-paper-plane"></i> Enviar Recado
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Status Update Input Box -->
+                <div class="bg-amber-50 border border-amber-200 p-2.5 rounded-sm flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-2 w-full">
+                        <i class="fas fa-bullhorn text-amber-600 text-sm"></i>
+                        <span class="font-bold text-amber-900 whitespace-nowrap">Status:</span>
+                        <input type="text" id="status-input-inline" placeholder="No que você está pensando agora? Ex: ouvindo Nx Zero..." 
+                               class="w-full text-xs px-2 py-1 border border-amber-300 rounded bg-white focus:outline-none focus:ring-1 focus:ring-amber-500">
+                    </div>
+                    <button onclick="updateStatusFromInput()" class="orkut-btn whitespace-nowrap">Atualizar</button>
+                </div>
+
+                <!-- Personal Information Tables -->
+                <div class="bg-white orkut-border rounded-sm shadow-sm overflow-hidden">
+                    <div class="orkut-card-header px-3 py-1.5 flex justify-between items-center">
+                        <span><i class="fas fa-user-circle mr-1"></i> Social / Informações Pessoais</span>
+                    </div>
+                    <div class="p-3">
+                        <table class="w-full text-xs">
+                            <tbody>
+                                <tr class="border-b border-slate-100">
+                                    <td class="py-1.5 text-slate-500 w-32 font-bold">Aniversário:</td>
+                                    <td id="info-birthday" class="py-1.5 text-slate-800">14 de Novembro</td>
+                                </tr>
+                                <tr class="border-b border-slate-100">
+                                    <td class="py-1.5 text-slate-500 font-bold">Signo:</td>
+                                    <td id="info-sign" class="py-1.5 text-slate-800">Escorpião ♏</td>
+                                </tr>
+                                <tr class="border-b border-slate-100">
+                                    <td class="py-1.5 text-slate-500 font-bold">Relacionamento:</td>
+                                    <td id="info-relationship" class="py-1.5 text-slate-800">Em um relacionamento sério</td>
+                                </tr>
+                                <tr class="border-b border-slate-100">
+                                    <td class="py-1.5 text-slate-500 font-bold">Quem sou eu:</td>
+                                    <td id="info-bio" class="py-1.5 text-slate-800 leading-relaxed">
+                                        Sou uma pessoa super alto astral, apaixonada por música nacional, fotologs e reunir os amigos na vila no fim de semana! Se não for pra somar nem entra no meu perfil. Mandem recados e depoimentos que eu respondo! 😉
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-slate-100">
+                                    <td class="py-1.5 text-slate-500 font-bold">Interesses:</td>
+                                    <td id="info-interests" class="py-1.5 text-slate-800">MSN Messenger, Fotolog, Rock Nacional, LAN House, Counter-Strike 1.6, Praia com a galera.</td>
+                                </tr>
+                                <tr class="border-b border-slate-100">
+                                    <td class="py-1.5 text-slate-500 font-bold">Músicas Favoritas:</td>
+                                    <td id="info-music" class="py-1.5 text-slate-800">Charlie Brown Jr., CPM 22, Nx Zero, Pitty, Linkin Park, Evanescence.</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1.5 text-slate-500 font-bold">Filmes Favoritos:</td>
+                                    <td id="info-movies" class="py-1.5 text-slate-800">De Volta Para o Futuro, Matrix, As Branquelas, O Auto da Compadecida.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Recent Activity Feed Mock -->
+                <div class="bg-white orkut-border rounded-sm shadow-sm overflow-hidden">
+                    <div class="orkut-card-header px-3 py-1.5">
+                        <span><i class="fas fa-stream mr-1"></i> Atualizações de Amigos</span>
+                    </div>
+                    <div class="p-3 space-y-2 text-xs">
+                        <div class="flex items-center space-x-2 border-b border-slate-100 pb-2">
+                            <span class="text-pink-600 font-bold">●</span>
+                            <span><strong>Rodrigo "Kiko"</strong> entrou na comunidade <a href="#" onclick="switchTab('comunidades')" class="orkut-link font-bold">"Eu odeio acordar cedo"</a>.</span>
+                            <span class="text-[10px] text-slate-400 ml-auto">há 10 min</span>
+                        </div>
+                        <div class="flex items-center space-x-2 border-b border-slate-100 pb-2">
+                            <span class="text-sky-600 font-bold">●</span>
+                            <span><strong>Fernanda Lima</strong> adicionou 4 novas fotos ao álbum <i>"Praia de Maresias 2005"</i>.</span>
+                            <span class="text-[10px] text-slate-400 ml-auto">há 1 hora</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-amber-600 font-bold">●</span>
+                            <span><strong>Lucas Silva</strong> enviou um depoimento para você! <a href="#" onclick="switchTab('depoimentos')" class="orkut-link font-bold">Clique para ler</a>.</span>
+                            <span class="text-[10px] text-slate-400 ml-auto">há 3 horas</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: RECADOS (SCRAPBOOK) -->
+            <div id="tab-recados" class="tab-content hidden space-y-4">
+                <!-- Add Scrap Form Card -->
+                <div class="bg-white orkut-border rounded-sm shadow-sm overflow-hidden">
+                    <div class="orkut-card-header px-3 py-1.5 flex justify-between items-center">
+                        <span><i class="fas fa-envelope mr-1"></i> Meu Caderno de Recados (Scrapbook)</span>
+                        <span class="text-xs font-normal text-slate-500">Mostrando recados recentes</span>
+                    </div>
+                    <div class="p-3 space-y-3 bg-slate-50 border-b border-slate-200">
+                        <label class="block font-bold text-xs text-slate-700">Deixar um recado para a página:</label>
+                        
+                        <!-- Rich formatting toolbar simulation -->
+                        <div class="flex flex-wrap items-center gap-1 bg-white p-1 border border-slate-300 rounded-t-sm text-xs">
+                            <button type="button" onclick="insertFormatting('[b]', '[/b]')" class="px-2 py-0.5 border border-slate-200 bg-slate-100 rounded hover:bg-slate-200 font-bold" title="Negrito">B</button>
+                            <button type="button" onclick="insertFormatting('[i]', '[/i]')" class="px-2 py-0.5 border border-slate-200 bg-slate-100 rounded hover:bg-slate-200 italic" title="Itálico">I</button>
+                            <button type="button" onclick="insertFormatting('[u]', '[/u]')" class="px-2 py-0.5 border border-slate-200 bg-slate-100 rounded hover:bg-slate-200 underline" title="Sublinhado">U</button>
+                            <span class="text-slate-300">|</span>
+                            <button type="button" onclick="insertEmoji('❤️')" class="hover:scale-125 transition">❤️</button>
+                            <button type="button" onclick="insertEmoji('⭐')" class="hover:scale-125 transition">⭐</button>
+                            <button type="button" onclick="insertEmoji('😜')" class="hover:scale-125 transition">😜</button>
+                            <button type="button" onclick="insertEmoji('🎸')" class="hover:scale-125 transition">🎸</button>
+                            <button type="button" onclick="insertEmoji('☕')" class="hover:scale-125 transition">☕</button>
+                        </div>
+
+                        <textarea id="scrap-text-input" rows="3" placeholder="Escreva aqui seu recado fofo, gif de bom dia ou recado com emoticons..." 
+                                  class="w-full text-xs p-2 border border-t-0 border-slate-300 rounded-b-sm focus:outline-none focus:ring-1 focus:ring-sky-500"></textarea>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="text-[10px] text-slate-500">Respeite as regras da comunidade Orkut. Não envie spam!</span>
+                            <button onclick="postScrap()" class="orkut-btn-pink orkut-btn px-4 py-1">
+                                <i class="fas fa-paper-plane mr-1"></i> Enviar Recado
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Scraps List Feed -->
+                    <div id="scraps-list-container" class="p-3 divide-y divide-slate-100 space-y-3">
+                        <!-- Dynamic rendering via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: DEPOIMENTOS (TESTIMONIALS) -->
+            <div id="tab-depoimentos" class="tab-content hidden space-y-4">
+                <!-- Pending Testimonials Alert Banner if any -->
+                <div id="pending-depo-banner" class="hidden bg-amber-50 border border-amber-300 p-3 rounded-sm">
+                    <h3 class="font-bold text-amber-900 text-xs flex items-center gap-1.5">
+                        <i class="fas fa-exclamation-triangle text-amber-600"></i> Você tem 1 depoimento pendente para aprovação!
+                    </h3>
+                    <p class="text-[11px] text-amber-800 mt-1">Lembre-se: Só aceite depoimentos de amigos verdadeiros! ❤️</p>
+                    <div id="pending-depo-list" class="mt-2 space-y-2">
+                        <!-- Pending item injected here -->
+                    </div>
+                </div>
+
+                <div class="bg-white orkut-border rounded-sm shadow-sm overflow-hidden">
+                    <div class="orkut-card-header px-3 py-1.5 flex justify-between items-center">
+                        <span><i class="fas fa-heart text-pink-600 mr-1"></i> Depoimentos Aprovados (<span id="depo-approved-count">5</span>)</span>
+                        <button onclick="toggleDepoForm()" class="orkut-btn text-xs">
+                            <i class="fas fa-pen mr-1"></i> Escrever Depoimento
+                        </button>
+                    </div>
+
+                    <!-- Testimonial Submission Form (Hidden by default) -->
+                    <div id="depo-form-box" class="hidden p-3 bg-pink-50 border-b border-pink-200 space-y-2">
+                        <label class="block font-bold text-xs text-pink-900">Enviar depoimento carinhoso:</label>
+                        <textarea id="depo-text-input" rows="3" placeholder="O que essa pessoa representa para você? Conte uma história engraçada ou emocionante..." 
+                                  class="w-full text-xs p-2 border border-pink-300 rounded focus:outline-none focus:ring-1 focus:ring-pink-500"></textarea>
+                        <div class="flex justify-between items-center">
+                            <span class="text-[10px] text-pink-700 italic">"Depoimento não é recado! Só envie para quem realmente gosta!"</span>
+                            <button onclick="submitTestimonial()" class="orkut-btn-pink orkut-btn px-3 py-1">
+                                Enviar Depoimento
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Approved Testimonials List Feed -->
+                    <div id="depo-list-container" class="p-3 divide-y divide-slate-100 space-y-3">
+                        <!-- Dynamic rendering via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: COMUNIDADES (COMMUNITIES) -->
+            <div id="tab-comunidades" class="tab-content hidden space-y-4">
+                <!-- Forum Detailed View (Modal / Dynamic Overlay) -->
+                <div id="community-forum-view" class="hidden bg-white orkut-border rounded-sm shadow-sm p-3 space-y-3">
+                    <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                        <div class="flex items-center space-x-2">
+                            <span id="forum-comm-icon" class="text-2xl">☕</span>
+                            <div>
+                                <h2 id="forum-comm-title" class="font-bold text-sm text-pink-700">Eu odeio acordar cedo</h2>
+                                <p id="forum-comm-members" class="text-[10px] text-slate-500">2.845.120 membros</p>
+                            </div>
+                        </div>
+                        <button onclick="closeCommunityForum()" class="orkut-btn">
+                            <i class="fas fa-arrow-left"></i> Voltar para Comunidades
+                        </button>
+                    </div>
+
+                    <p id="forum-comm-desc" class="text-xs text-slate-700 bg-sky-50 p-2 border border-sky-100 rounded">
+                        Comunidade para quem ama a cama, odeia o despertador e acha que o dia deveria começar às 14h!
+                    </p>
+
+                    <!-- Forum Topics Section -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center font-bold text-xs text-slate-800">
+                            <span>Fórum de Discussão (<span id="forum-topics-count">3</span> tópicos)</span>
+                            <button onclick="openNewTopicModal()" class="orkut-btn">
+                                <i class="fas fa-plus"></i> Novo Tópico
+                            </button>
+                        </div>
+
+                        <div id="forum-topics-list" class="border border-slate-200 rounded divide-y divide-slate-100 text-xs">
+                            <!-- Dynamic rendering of topics -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Communities Hub -->
+                <div id="community-main-view" class="space-y-4">
+                    <!-- Communities Header & Search -->
+                    <div class="bg-white orkut-border p-3 rounded-sm shadow-sm flex flex-col sm:flex-row justify-between items-center gap-2">
+                        <div class="flex items-center gap-2 w-full sm:w-auto">
+                            <input type="text" id="comm-search-input" onkeyup="filterCommunities()" placeholder="Buscar comunidades..." 
+                                   class="px-2 py-1 border border-slate-300 text-xs rounded w-full sm:w-64 focus:outline-none focus:ring-1 focus:ring-sky-500">
+                            <button onclick="filterCommunities()" class="orkut-btn">Buscar</button>
+                        </div>
+                        <button onclick="openModal('create-comm-modal')" class="orkut-btn-pink orkut-btn whitespace-nowrap">
+                            <i class="fas fa-plus-circle mr-1"></i> Criar Comunidade
+                        </button>
+                    </div>
+
+                    <!-- Category Filters -->
+                    <div class="flex space-x-2 text-xs border-b border-slate-300 pb-1">
+                        <button onclick="filterCommCategory('all')" class="orkut-btn active-comm-tab">Todas</button>
+                        <button onclick="filterCommCategory('mine')" class="orkut-btn">Minhas Comunidades</button>
+                        <button onclick="filterCommCategory('popular')" class="orkut-btn">Em Alta 🔥</button>
+                    </div>
+
+                    <!-- Communities Grid -->
+                    <div id="communities-grid" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <!-- Dynamic rendering via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: AMIGOS (FRIENDS DIRECTORY) -->
+            <div id="tab-amigos" class="tab-content hidden space-y-4">
+                <div class="bg-white orkut-border rounded-sm shadow-sm overflow-hidden">
+                    <div class="orkut-card-header px-3 py-1.5 flex justify-between items-center">
+                        <span><i class="fas fa-user-friends mr-1"></i> Lista de Amigos (<span id="friends-total-header">128</span>)</span>
+                        <div class="flex items-center space-x-2">
+                            <input type="text" id="friends-search-input" onkeyup="filterFriends()" placeholder="Buscar amigo por nome..." 
+                                   class="px-2 py-0.5 text-xs border border-slate-300 rounded w-40 sm:w-52">
+                            <button onclick="openModal('add-friend-modal')" class="orkut-btn text-xs">
+                                <i class="fas fa-user-plus"></i> Add Amigo
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="friends-directory-grid" class="p-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                        <!-- Dynamic rendering via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 6: SORTE DO DIA (FORTUNE COOKIE) -->
+            <div id="tab-sorte" class="tab-content hidden space-y-4">
+                <div class="bg-gradient-to-b from-amber-50 to-orange-100 orkut-border p-6 rounded-sm text-center space-y-4 shadow-sm border-amber-200">
+                    <div class="inline-block bg-white p-3 rounded-full shadow-md text-amber-600 text-4xl mb-2 border border-amber-200">
+                        🥠
+                    </div>
+                    <h2 class="text-lg font-bold text-amber-900 font-serif">Biscoito da Sorte do Orkut</h2>
+                    <p class="text-xs text-amber-800 max-w-md mx-auto">
+                        A tradicional sorte do dia que animava as suas manhãs nos anos 2000! Abra seu biscoito para receber um conselho valioso e seus números da sorte.
+                    </p>
+
+                    <!-- Interactive Cookie Card -->
+                    <div id="cookie-card" class="bg-white p-5 rounded-md border-2 border-dashed border-amber-300 max-w-lg mx-auto shadow-sm my-4 transition-all">
+                        <p id="fortune-quote" class="text-sm font-medium text-slate-800 italic leading-relaxed">
+                            "Clique no botão abaixo para quebrar o biscoito e ler sua sorte de hoje..."
+                        </p>
+                        
+                        <div id="fortune-extra" class="hidden mt-4 pt-3 border-t border-amber-100 flex flex-wrap justify-around text-xs text-amber-900 font-bold">
+                            <div>Números da Sorte: <span id="fortune-numbers" class="text-pink-600">07 - 14 - 23 - 38 - 42 - 88</span></div>
+                            <div>Cor do Dia: <span id="fortune-color" class="text-sky-600">Azul Celeste</span></div>
+                        </div>
+                    </div>
+
+                    <button onclick="revealFortune()" class="orkut-btn-pink orkut-btn px-6 py-2 text-sm shadow">
+                        <i class="fas fa-cookie-bite mr-1"></i> Abrir Biscoito da Sorte
+                    </button>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="w-full bg-slate-200 border-t border-slate-300 mt-8 py-4 px-4 text-center text-slate-600 text-[11px] space-y-1">
+        <div class="flex flex-wrap justify-center space-x-3 text-sky-800 font-bold">
+            <a href="#" onclick="switchTab('perfil')" class="hover:underline">Início</a><span>|</span>
+            <a href="#" onclick="switchTab('perfil')" class="hover:underline">Sobre o Orkut</a><span>|</span>
+            <a href="#" onclick="switchTab('comunidades')" class="hover:underline">Comunidades</a><span>|</span>
+            <a href="#" onclick="switchTab('sorte')" class="hover:underline">Sorte do Dia</a><span>|</span>
+            <a href="#" onclick="resetAllData()" class="hover:underline text-pink-700">Limpar Dados / Reset</a>
+        </div>
+        <p>© 2004 - 2026 Orkut Nostalgia Edition. Feito com nostalgia e código para os fãs do eterno Orkut.com.br</p>
+    </footer>
+
+    <!-- MODALS SECTION -->
+    
+    <!-- Edit Profile Modal -->
+    <div id="edit-profile-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-3">
+        <div class="bg-white rounded shadow-lg max-w-lg w-full orkut-border overflow-hidden">
+            <div class="orkut-card-header px-3 py-2 flex justify-between items-center">
+                <span>Editar Informações do Perfil</span>
+                <button onclick="closeModal('edit-profile-modal')" class="text-slate-500 hover:text-black font-bold">✕</button>
+            </div>
+            <form onsubmit="saveProfileEdits(event)" class="p-4 space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700">Nome de Exibição:</label>
+                    <input type="text" id="edit-name" class="w-full p-1 border border-slate-300 rounded">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700">Cidade / Estado:</label>
+                    <input type="text" id="edit-location" class="w-full p-1 border border-slate-300 rounded">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700">Status de Relacionamento:</label>
+                    <input type="text" id="edit-relationship" class="w-full p-1 border border-slate-300 rounded">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700">Quem sou eu (Bio):</label>
+                    <textarea id="edit-bio" rows="3" class="w-full p-1 border border-slate-300 rounded"></textarea>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700">Interesses:</label>
+                    <input type="text" id="edit-interests" class="w-full p-1 border border-slate-300 rounded">
+                </div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeModal('edit-profile-modal')" class="orkut-btn">Cancelar</button>
+                    <button type="submit" class="orkut-btn-pink orkut-btn">Salvar Alterações</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Photo Modal -->
+    <div id="edit-photo-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-3">
+        <div class="bg-white rounded shadow-lg max-w-md w-full orkut-border overflow-hidden">
+            <div class="orkut-card-header px-3 py-2 flex justify-between items-center">
+                <span>Alterar Foto de Perfil</span>
+                <button onclick="closeModal('edit-photo-modal')" class="text-slate-500 hover:text-black font-bold">✕</button>
+            </div>
+            <div class="p-4 space-y-3 text-xs">
+                <p class="text-slate-600">Insira a URL de uma imagem na internet para usar como foto do Orkut:</p>
+                <input type="text" id="photo-url-input" placeholder="https://exemplo.com/minha-foto.jpg" class="w-full p-1 border border-slate-300 rounded">
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeModal('edit-photo-modal')" class="orkut-btn">Cancelar</button>
+                    <button type="button" onclick="savePhotoUrl()" class="orkut-btn-pink orkut-btn">Salvar Foto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Community Modal -->
+    <div id="create-comm-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-3">
+        <div class="bg-white rounded shadow-lg max-w-md w-full orkut-border overflow-hidden">
+            <div class="orkut-card-header px-3 py-2 flex justify-between items-center">
+                <span>Criar Nova Comunidade</span>
+                <button onclick="closeModal('create-comm-modal')" class="text-slate-500 hover:text-black font-bold">✕</button>
+            </div>
+            <form onsubmit="createNewCommunity(event)" class="p-4 space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700">Nome da Comunidade:</label>
+                    <input type="text" id="comm-name-input" placeholder="Ex: Eu odeio acorda cedo" required class="w-full p-1 border border-slate-300 rounded">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700">Ícone Emoticon / Emoji:</label>
+                    <input type="text" id="comm-icon-input" placeholder="Ex: 😴 ou ⚽" required class="w-full p-1 border border-slate-300 rounded">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700">Descrição:</label>
+                    <textarea id="comm-desc-input" rows="3" placeholder="Do que se trata essa comunidade?" required class="w-full p-1 border border-slate-300 rounded"></textarea>
+                </div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeModal('create-comm-modal')" class="orkut-btn">Cancelar</button>
+                    <button type="submit" class="orkut-btn-pink orkut-btn">Criar Comunidade</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Friend Modal -->
+    <div id="add-friend-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-3">
+        <div class="bg-white rounded shadow-lg max-w-md w-full orkut-border overflow-hidden">
+            <div class="orkut-card-header px-3 py-2 flex justify-between items-center">
+                <span>Adicionar Novo Amigo</span>
+                <button onclick="closeModal('add-friend-modal')" class="text-slate-500 hover:text-black font-bold">✕</button>
+            </div>
+            <form onsubmit="addNewFriend(event)" class="p-4 space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700">Nome do Amigo:</label>
+                    <input type="text" id="friend-name-input" placeholder="Ex: Thiago Lacerda" required class="w-full p-1 border border-slate-300 rounded">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700">Status do Amigo:</label>
+                    <input type="text" id="friend-status-input" placeholder="Ex: Jogando CS 1.6..." class="w-full p-1 border border-slate-300 rounded">
+                </div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeModal('add-friend-modal')" class="orkut-btn">Cancelar</button>
+                    <button type="submit" class="orkut-btn-pink orkut-btn">Adicionar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- New Forum Topic Modal -->
+    <div id="new-topic-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-3">
+        <div class="bg-white rounded shadow-lg max-w-md w-full orkut-border overflow-hidden">
+            <div class="orkut-card-header px-3 py-2 flex justify-between items-center">
+                <span>Novo Tópico no Fórum</span>
+                <button onclick="closeModal('new-topic-modal')" class="text-slate-500 hover:text-black font-bold">✕</button>
+            </div>
+            <form onsubmit="postNewForumTopic(event)" class="p-4 space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700">Título do Tópico:</label>
+                    <input type="text" id="topic-title-input" required class="w-full p-1 border border-slate-300 rounded">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700">Mensagem Inicial:</label>
+                    <textarea id="topic-body-input" rows="3" required class="w-full p-1 border border-slate-300 rounded"></textarea>
+                </div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeModal('new-topic-modal')" class="orkut-btn">Cancelar</button>
+                    <button type="submit" class="orkut-btn-pink orkut-btn">Criar Tópico</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT STATE AND LOGIC -->
+    <script>
+        
+        // Initial Default Mock Data
+        const defaultState = {
+            user: {
+                name: "sheldon cooper",
+                location: "Campina grande do Sul, PR, Brasil",
+                relationship: "abandonado 😢",
+                status: "estudando",
+                birthday: "24 de setembro",
+                sign: "peixes ♓",
+                bio: "Sou uma pessoa super alto astral, apaixonada por música nacional, fotologs e reunir os amigos na vila no fim de semana! Se não for pra somar nem entra no meu perfil. Mandem recados e depoimentos que eu respondo! 😉",
+                interests: "MSN Messenger, Fotolog, Rock Nacional, LAN House, Counter-Strike 1.6, Praia com a galera.",
+                music: "mettalica, iron maiden, ac/dc, nirvana, linkin park, system of a down.",
+                movies: "De Volta Para o Futuro, Matrix, As Branquelas, O Auto da Compadecida.",
+                photo: "sheldon.jpg"
+            },
+            scraps: [
+                {
+                    id: 1,
+                    author: "Lucas Silva",
+                    photo: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&auto=format&fit=crop&q=80",
+                    date: "12 de Out 2005 às 14:32",
+                    content: "Passando pra deixar aquele recadinho especial na sua página! Que seu fim de semana seja abençoado! Me add no MSN depois pra gente teclar! Bjs ❤️"
+                },
+                {
+                    id: 2,
+                    author: "Camila Pitanga",
+                    photo: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80",
+                    date: "11 de Out 2005 às 20:15",
+                    content: "Amiga! Amei as fotos do Fotolog ontem! Vamos pra balada no sábado? O Kiko disse que vai levar a galera da faculdade! me respondeee!"
+                },
+                {
+                    id: 3,
+                    author: "Rodrigo 'Kiko'",
+                    photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80",
+                    date: "10 de Out 2005 às 09:10",
+                    content: "E aí Ju! Vi que vc entrou na comunidade de CS 1.6 kkk bora jogar um corujão na LAN house esse fim de semana?"
+                }
+            ],
+            testimonials: {
+                approved: [
+                    {
+                        id: 101,
+                        author: "Camila Pitanga",
+                        photo: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80",
+                        date: "05 de Set 2005",
+                        text: "O que dizer dessa garota que mal conheço e já considero pacas? A Ju é simplesmente fantástica, amiga de todas as horas, conselheira e parceira de balada! Quem tem a amizade dela tem tudo! Te amo miga! ❤️"
+                    },
+                    {
+                        id: 102,
+                        author: "Rodrigo 'Kiko'",
+                        photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80",
+                        date: "20 de Ago 2005",
+                        text: "Ju é sangue bom demais! Conheço desde os tempos do colégio e sei que posso contar pra qualquer momento. Nota 1000! Só precisa aprender a jogar de Snip no CS kkk Tamo junto!"
+                    }
+                ],
+                pending: [
+                    {
+                        id: 103,
+                        author: "Lucas Silva",
+                        photo: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&auto=format&fit=crop&q=80",
+                        date: "Hoje às 10:00",
+                        text: "A Ju é uma pessoa incrivelmente iluminada! Sempre com o sorriso no rosto e trazendo energia positiva por onde passa. Uma honra ser seu amigo no Orkut e na vida real!"
+                    }
+                ]
+            },
+            communities: [
+                {
+                    id: 1,
+                    name: "Eu odeio acordar cedo",
+                    members: "2.845.120",
+                    icon: "😴",
+                    category: "popular",
+                    joined: true,
+                    description: "Comunidade para quem ama a cama, odeia o despertador e acha que o dia só deveria começar depois do meio-dia!",
+                    topics: [
+                        { id: 1, title: "Por que a aula das 7h30 existe?", author: "Kiko", posts: 42 },
+                        { id: 2, title: "Quem inventou a segunda-feira?", author: "Ana", posts: 128 },
+                        { id: 3, title: "Qual o seu recorde de sonecas no alarme?", author: "Ju", posts: 95 }
+                    ]
+                },
+                {
+                    id: 2,
+                    name: "Deus me disse: Pede que eu dou",
+                    members: "1.920.410",
+                    icon: "🙏",
+                    category: "popular",
+                    joined: true,
+                    description: "Para quem tem fé que aquele milagre ou aquela promoção do MSN vai dar certo!",
+                    topics: [
+                        { id: 1, title: "Pedindo aprovação nas provas de final de ano", author: "Lucas", posts: 310 }
+                    ]
+                },
+                {
+                    id: 3,
+                    name: "Eu amo a minha mãe",
+                    members: "3.150.900",
+                    icon: "❤️",
+                    category: "popular",
+                    joined: true,
+                    description: "Homenagem à pessoa mais especial do universo que sempre deixa a janta pronta e o leite quente!",
+                    topics: [
+                        { id: 1, title: "Qual a comida da sua mãe que vc mais ama?", author: "Mariana", posts: 512 }
+                    ]
+                },
+                {
+                    id: 4,
+                    name: "Só entro na net pra ver orkut",
+                    members: "980.120",
+                    icon: "🌐",
+                    category: "popular",
+                    joined: false,
+                    description: "Ligo o computador discado à meia-noite só pra checar meus scraps e depoimentos!",
+                    topics: [
+                        { id: 1, title: "Vocês usam internet discada de sabado/domingo?", author: "Pedro", posts: 64 }
+                    ]
+                },
+                {
+                    id: 5,
+                    name: "Tocava a campainha e corria",
+                    members: "650.400",
+                    icon: "🏃‍♂️",
+                    category: "mine",
+                    joined: true,
+                    description: "Infância raiz nos anos 90 e 2000 aprontando na rua do bairro!",
+                    topics: [
+                        { id: 1, title: "Qual foi a pior broncada que vc já levou?", author: "Chico", posts: 19 }
+                    ]
+                },
+                {
+                    id: 6,
+                    name: "Respondo no MSN e continuo ON",
+                    members: "1.120.000",
+                    icon: "💬",
+                    category: "popular",
+                    joined: false,
+                    description: "Tocar o chacoalhar de janela do MSN é a melhor sensação!",
+                    topics: [
+                        { id: 1, title: "Qual o seu subnick mais marcante do MSN?", author: "PittyFan", posts: 88 }
+                    ]
+                }
+            ],
+            friends: [
+                { id: 1, name: "Camila Pitanga", photo: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80", status: "Ouvindo Evanescence" },
+                { id: 2, name: "Rodrigo 'Kiko'", photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80", status: "Jogando CS 1.6 na de_aztec" },
+                { id: 3, name: "Lucas Silva", photo: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&auto=format&fit=crop&q=80", status: "Online no MSN" },
+                { id: 4, name: "Mariana Rios", photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80", status: "Estudando pra facul" },
+                { id: 5, name: "Thiago Lacerda", photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80", status: "Na praia de Maresias" },
+                { id: 6, name: "Fernanda Paes", photo: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=100&auto=format&fit=crop&q=80", status: "Customizando meu Fotolog" }
+            ]
+        };
+
+        const fortunesList = [
+            "Você receberá um scrap inesperado que fará seu dia muito feliz!",
+            "Seu status no MSN vai chamar a atenção de quem você tanto espera.",
+            "Um amigo antigo voltará a te procurar nessa semana.",
+            "Amanhã será o dia perfeito para ir na LAN House com a galera.",
+            "A sorte sorri para quem manda depoimento de coração!",
+            "Sua música favorita vai tocar no rádio hoje à tarde.",
+            "Você encontrará R$ 5,00 no bolso da sua jaqueta jeans."
+        ];
+
+        // State initialization with LocalStorage check
+        let state = JSON.parse(localStorage.getItem('orkut_state')) || defaultState;
+        let currentCommunityId = null;
+
+        function saveState() {
+            localStorage.setItem('orkut_state', JSON.stringify(state));
+        }
+
+        function resetAllData() {
+            if (window.confirm("Deseja mesmo resetar todos os recados, comunidades e alterações para o estado inicial?")) {
+                localStorage.removeItem('orkut_state');
+                state = defaultState;
+                location.reload();
+            }
+        }
+
+        // DOM Content Loaded Handler
+        window.onload = function() {
+            renderProfileData();
+            renderScraps();
+            renderTestimonials();
+            renderCommunities();
+            renderFriends();
+            renderSidebar();
+        };
+
+        // Navigation Tab Switching Logic
+        function switchTab(tabName) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.add('hidden'));
+
+            // Show target tab
+            const target = document.getElementById(`tab-${tabName}`);
+            if (target) {
+                target.classList.remove('hidden');
+            }
+
+            // Scroll top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Render Profile Overview
+        function renderProfileData() {
+            const u = state.user;
+            document.getElementById('header-user-name').innerText = u.name;
+            document.getElementById('sidebar-name').innerText = u.name;
+            document.getElementById('profile-title-name').innerText = u.name;
+            document.getElementById('sidebar-photo').src = u.photo;
+            document.getElementById('sidebar-status-text').innerText = `"${u.status}"`;
+            document.getElementById('status-input-inline').value = u.status;
+
+            document.getElementById('profile-location').innerText = u.location;
+            document.getElementById('profile-relationship').innerText = u.relationship;
+            document.getElementById('info-birthday').innerText = u.birthday;
+            document.getElementById('info-sign').innerText = u.sign;
+            document.getElementById('info-relationship').innerText = u.relationship;
+            document.getElementById('info-bio').innerText = u.bio;
+            document.getElementById('info-interests').innerText = u.interests;
+            document.getElementById('info-music').innerText = u.music;
+            document.getElementById('info-movies').innerText = u.movies;
+
+            // Pre-fill edit modal form
+            document.getElementById('edit-name').value = u.name;
+            document.getElementById('edit-location').value = u.location;
+            document.getElementById('edit-relationship').value = u.relationship;
+            document.getElementById('edit-bio').value = u.bio;
+            document.getElementById('edit-interests').value = u.interests;
+        }
+
+        // Render Sidebar Counts & Mini Grids
+        function renderSidebar() {
+            // Counts
+            document.getElementById('sidebar-scraps-count').innerText = state.scraps.length;
+            document.getElementById('recados-count-badge').innerText = state.scraps.length;
+            document.getElementById('sidebar-depo-count').innerText = state.testimonials.approved.length;
+            document.getElementById('sidebar-friends-count').innerText = state.friends.length;
+            document.getElementById('mini-friends-total').innerText = state.friends.length;
+            document.getElementById('friends-total-header').innerText = state.friends.length;
+
+            const joinedComms = state.communities.filter(c => c.joined);
+            document.getElementById('sidebar-comm-count').innerText = joinedComms.length;
+            document.getElementById('mini-comm-total').innerText = joinedComms.length;
+
+            // Mini Friends Grid (up to 6)
+            const miniFriendsGrid = document.getElementById('mini-friends-grid');
+            miniFriendsGrid.innerHTML = state.friends.slice(0, 6).map(f => `
+                <div class="text-center group cursor-pointer" onclick="switchTab('amigos')">
+                    <img src="${f.photo}" alt="${f.name}" class="w-12 h-12 object-cover rounded-sm border border-slate-300 mx-auto group-hover:border-pink-500">
+                    <p class="text-[9px] text-slate-700 truncate mt-0.5">${f.name}</p>
+                </div>
+            `).join('');
+
+            // Mini Communities Grid (up to 6)
+            const miniCommGrid = document.getElementById('mini-comm-grid');
+            miniCommGrid.innerHTML = joinedComms.slice(0, 6).map(c => `
+                <div class="text-center group cursor-pointer p-1 bg-slate-50 border border-slate-200 rounded hover:border-sky-400" onclick="openCommunityForum(${c.id})">
+                    <div class="text-lg">${c.icon}</div>
+                    <p class="text-[9px] text-slate-700 font-bold truncate leading-tight">${c.name}</p>
+                </div>
+            `).join('');
+        }
+
+        // Status Update
+        function updateStatusFromInput() {
+            const input = document.getElementById('status-input-inline').value.trim();
+            if (input) {
+                state.user.status = input;
+                saveState();
+                renderProfileData();
+            }
+        }
+
+        // Render Scraps (Recados) Feed
+        function renderScraps() {
+            const container = document.getElementById('scraps-list-container');
+            if (state.scraps.length === 0) {
+                container.innerHTML = `<p class="text-center text-slate-500 text-xs py-4">Nenhum recado por enquanto. Seja o primeiro a escrever!</p>`;
+                return;
+            }
+
+            container.innerHTML = state.scraps.map(s => `
+                <div class="pt-3 flex gap-3 items-start">
+                    <img src="${s.photo}" alt="${s.author}" class="w-10 h-10 object-cover rounded-sm border border-slate-300">
+                    <div class="flex-1 text-xs">
+                        <div class="flex justify-between items-center bg-sky-50 px-2 py-1 rounded border border-sky-100">
+                            <div>
+                                <strong class="text-sky-900 font-bold">${s.author}</strong>
+                                <span class="text-[10px] text-slate-400 ml-2">${s.date}</span>
+                            </div>
+                            <button onclick="deleteScrap(${s.id})" class="text-pink-600 hover:text-pink-800 text-[10px]" title="Excluir recado">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        <p class="mt-1.5 text-slate-800 leading-relaxed break-words">${formatText(s.content)}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Format Pseudo BBCodes
+        function formatText(str) {
+            if (!str) return '';
+            return str
+                .replace(/\[b\]/g, '<strong>').replace(/\[\/b\]/g, '</strong>')
+                .replace(/\[i\]/g, '<em>').replace(/\[\/i\]/g, '</em>')
+                .replace(/\[u\]/g, '<span class="underline">').replace(/\[\/u\]/g, '</span>');
+        }
+
+        // Post New Scrap
+        function postScrap() {
+            const textInput = document.getElementById('scrap-text-input');
+            const content = textInput.value.trim();
+            if (!content) return;
+
+            const newScrap = {
+                id: Date.now(),
+                author: "Você (Visitante)",
+                photo: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80",
+                date: "Hoje às " + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                content: content
+            };
+
+            state.scraps.unshift(newScrap);
+            saveState();
+            textInput.value = '';
+            renderScraps();
+            renderSidebar();
+        }
+
+        function deleteScrap(id) {
+            state.scraps = state.scraps.filter(s => s.id !== id);
+            saveState();
+            renderScraps();
+            renderSidebar();
+        }
+
+        // Toolbar formatting helpers
+        function insertFormatting(startTag, endTag) {
+            const textarea = document.getElementById('scrap-text-input');
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const text = textarea.value;
+            textarea.value = text.substring(0, start) + startTag + text.substring(start, end) + endTag + text.substring(end);
+            textarea.focus();
+        }
+
+        function insertEmoji(emoji) {
+            const textarea = document.getElementById('scrap-text-input');
+            textarea.value += emoji;
+            textarea.focus();
+        }
+
+        
+        // Render Testimonials
+        function renderTestimonials() {
+            const approvedContainer = document.getElementById('depo-list-container');
+            const pendingBanner = document.getElementById('pending-depo-banner');
+            const pendingList = document.getElementById('pending-depo-list');
+
+            // Render Approved
+            document.getElementById('depo-approved-count').innerText = state.testimonials.approved.length;
+            approvedContainer.innerHTML = state.testimonials.approved.map(t => `
+                <div class="pt-3 flex gap-3 items-start">
+                    <img src="${t.photo}" alt="${t.author}" class="w-10 h-10 object-cover rounded-sm border border-slate-300">
+                    <div class="flex-1 text-xs">
+                        <div class="flex justify-between items-center bg-pink-50 px-2 py-1 rounded border border-pink-100">
+                            <div>
+                                <strong class="text-pink-900 font-bold">${t.author}</strong>
+                                <span class="text-[10px] text-slate-400 ml-2">${t.date}</span>
+                            </div>
+                            <span class="text-pink-600 font-bold text-[10px]">❤️ Depoimento Aceito</span>
+                        </div>
+                        <p class="mt-1.5 text-slate-800 leading-relaxed italic bg-amber-50/50 p-2 rounded border border-amber-100">
+                            "${t.text}"
+                        </p>
+                    </div>
+                </div>
+            `).join('');
+
+            // Render Pending
+            if (state.testimonials.pending.length > 0) {
+                pendingBanner.classList.remove('hidden');
+                document.getElementById('depo-pending-badge').innerText = state.testimonials.pending.length;
+                document.getElementById('depo-pending-badge').classList.remove('hidden');
+
+                pendingList.innerHTML = state.testimonials.pending.map(p => `
+                    <div class="bg-white p-2 border border-amber-200 rounded flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                        <div class="flex items-center gap-2">
+                            <img src="${p.photo}" class="w-8 h-8 rounded-sm">
+                            <div>
+                                <strong>${p.author}</strong>
+                                <p class="italic text-[11px] text-slate-700 font-normal">"${p.text}"</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-1">
+                            <button onclick="approveDepo(${p.id})" class="orkut-btn-pink orkut-btn text-[10px]">Aceitar</button>
+                            <button onclick="rejectDepo(${p.id})" class="orkut-btn text-[10px]">Recusar</button>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                pendingBanner.classList.add('hidden');
+                document.getElementById('depo-pending-badge').classList.add('hidden');
+            }
+        }
+
+        function toggleDepoForm() {
+            document.getElementById('depo-form-box').classList.toggle('hidden');
+        }
+
+        function submitTestimonial() {
+            const input = document.getElementById('depo-text-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const newDepo = {
+                id: Date.now(),
+                author: "Amigo Anônimo",
+                photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80",
+                date: "Aguardando Aprovação",
+                text: text
+            };
+
+            state.testimonials.pending.push(newDepo);
+            saveState();
+            input.value = '';
+            toggleDepoForm();
+            renderTestimonials();
+        }
+
+        function approveDepo(id) {
+            const item = state.testimonials.pending.find(p => p.id === id);
+            if (item) {
+                item.date = "Aprovado Hoje";
+                state.testimonials.approved.unshift(item);
+                state.testimonials.pending = state.testimonials.pending.filter(p => p.id !== id);
+                saveState();
+                renderTestimonials();
+                renderSidebar();
+            }
+        }
+
+        function rejectDepo(id) {
+            state.testimonials.pending = state.testimonials.pending.filter(p => p.id !== id);
+            saveState();
+            renderTestimonials();
+        }
+
+        // Render Communities Hub
+        function renderCommunities(filterKeyword = '', category = 'all') {
+            const grid = document.getElementById('communities-grid');
+            
+            let list = state.communities;
+            if (category === 'mine') {
+                list = list.filter(c => c.joined);
+            } else if (category === 'popular') {
+                list = list.filter(c => c.category === 'popular');
+            }
+
+            if (filterKeyword) {
+                list = list.filter(c => c.name.toLowerCase().includes(filterKeyword.toLowerCase()));
+            }
+
+            grid.innerHTML = list.map(c => `
+                <div class="bg-white orkut-border p-3 rounded-sm shadow-sm flex justify-between items-start gap-2 hover:border-sky-400 transition">
+                    <div class="flex gap-3 items-start">
+                        <span class="text-3xl bg-sky-50 p-2 rounded border border-sky-100 flex-shrink-0">${c.icon}</span>
+                        <div>
+                            <h3 onclick="openCommunityForum(${c.id})" class="font-bold text-sky-900 hover:text-pink-600 cursor-pointer text-xs">
+                                ${c.name}
+                            </h3>
+                            <p class="text-[10px] text-slate-500 font-bold">${c.members} membros</p>
+                            <p class="text-[11px] text-slate-600 mt-1 line-clamp-2">${c.description}</p>
+                        </div>
+                    </div>
+                    <button onclick="toggleJoinCommunity(${c.id})" class="${c.joined ? 'orkut-btn' : 'orkut-btn-pink orkut-btn'} text-[10px] whitespace-nowrap">
+                        ${c.joined ? 'Sair' : '+ Participar'}
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function filterCommunities() {
+            const val = document.getElementById('comm-search-input').value;
+            renderCommunities(val);
+        }
+
+        function filterCommCategory(cat) {
+            renderCommunities('', cat);
+        }
+
+        function toggleJoinCommunity(id) {
+            const comm = state.communities.find(c => c.id === id);
+            if (comm) {
+                comm.joined = !comm.joined;
+                saveState();
+                renderCommunities();
+                renderSidebar();
+            }
+        }
+
+        // Forum Topic View inside Community
+        function openCommunityForum(commId) {
+            currentCommunityId = commId;
+            const comm = state.communities.find(c => c.id === commId);
+            if (!comm) return;
+
+            document.getElementById('community-main-view').classList.add('hidden');
+            document.getElementById('community-forum-view').classList.remove('hidden');
+
+            document.getElementById('forum-comm-title').innerText = comm.name;
+            document.getElementById('forum-comm-icon').innerText = comm.icon;
+            document.getElementById('forum-comm-members').innerText = `${comm.members} membros`;
+            document.getElementById('forum-comm-desc').innerText = comm.description;
+            document.getElementById('forum-topics-count').innerText = comm.topics ? comm.topics.length : 0;
+
+            renderForumTopics(comm);
+        }
+
+        function closeCommunityForum() {
+            document.getElementById('community-forum-view').classList.add('hidden');
+            document.getElementById('community-main-view').classList.remove('hidden');
+        }
+
+        function renderForumTopics(comm) {
+            const list = document.getElementById('forum-topics-list');
+            if (!comm.topics || comm.topics.length === 0) {
+                list.innerHTML = `<p class="p-3 text-slate-500 italic text-center">Nenhum tópico criado ainda neste fórum.</p>`;
+                return;
+            }
+
+            list.innerHTML = comm.topics.map(t => `
+                <div class="p-2.5 flex justify-between items-center hover:bg-sky-50 cursor-pointer">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-comments text-sky-600"></i>
+                        <div>
+                            <strong class="text-sky-900">${t.title}</strong>
+                            <p class="text-[10px] text-slate-500">por ${t.author}</p>
+                        </div>
+                    </div>
+                    <span class="bg-slate-100 text-slate-600 px-2 py-0.5 rounded text-[10px] font-bold">${t.posts} respostas</span>
+                </div>
+            `).join('');
+        }
+
+        function openNewTopicModal() {
+            openModal('new-topic-modal');
+        }
+
+        function postNewForumTopic(e) {
+            e.preventDefault();
+            const title = document.getElementById('topic-title-input').value.trim();
+            if (!title || !currentCommunityId) return;
+
+            const comm = state.communities.find(c => c.id === currentCommunityId);
+            if (comm) {
+                if (!comm.topics) comm.topics = [];
+                comm.topics.unshift({
+                    id: Date.now(),
+                    title: title,
+                    author: state.user.name,
+                    posts: 1
+                });
+                saveState();
+                closeModal('new-topic-modal');
+                renderForumTopics(comm);
+            }
+        }
+
+        // Render Friends List
+        function renderFriends(keyword = '') {
+            const grid = document.getElementById('friends-directory-grid');
+            let list = state.friends;
+
+            if (keyword) {
+                list = list.filter(f => f.name.toLowerCase().includes(keyword.toLowerCase()));
+            }
+
+            grid.innerHTML = list.map(f => `
+                <div class="bg-white border border-slate-200 p-2 rounded flex gap-2 items-center hover:shadow-sm">
+                    <img src="${f.photo}" alt="${f.name}" class="w-12 h-12 object-cover rounded border border-slate-300">
+                    <div class="flex-1 overflow-hidden">
+                        <strong class="text-xs text-sky-900 block truncate">${f.name}</strong>
+                        <span class="text-[10px] text-slate-500 italic block truncate">${f.status || 'Sem status'}</span>
+                        <div class="mt-1 flex gap-2 text-[10px]">
+                            <a href="#" onclick="switchTab('recados')" class="orkut-link">mandar recado</a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterFriends() {
+            const val = document.getElementById('friends-search-input').value;
+            renderFriends(val);
+        }
+
+        function addNewFriend(e) {
+            e.preventDefault();
+            const name = document.getElementById('friend-name-input').value.trim();
+            const status = document.getElementById('friend-status-input').value.trim();
+
+            if (!name) return;
+
+            const newF = {
+                id: Date.now(),
+                name: name,
+                photo: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80",
+                status: status || "Online no Orkut"
+            };
+
+            state.friends.unshift(newF);
+            saveState();
+            closeModal('add-friend-modal');
+            renderFriends();
+            renderSidebar();
+        }
+
+        // Interactive Fortune Cookie Drawer
+        function revealFortune() {
+            const quoteEl = document.getElementById('fortune-quote');
+            const extraEl = document.getElementById('fortune-extra');
+            const card = document.getElementById('cookie-card');
+
+            card.classList.remove('animate-cookie');
+            void card.offsetWidth; // trigger reflow for animation restart
+            card.classList.add('animate-cookie');
+
+            const randomIndex = Math.floor(Math.random() * fortunesList.length);
+            quoteEl.innerText = `"${fortunesList[randomIndex]}"`;
+
+            // Random Lucky numbers
+            const nums = Array.from({length: 6}, () => Math.floor(Math.random() * 60) + 1).sort((a,b)=>a-b);
+            document.getElementById('fortune-numbers').innerText = nums.join(' - ');
+
+            extraEl.classList.remove('hidden');
+        }
+
+        // Global Search Bar Handler
+        function handleGlobalSearch() {
+            const query = document.getElementById('global-search').value.trim();
+            if (!query) return;
+
+            // Switch to communities and filter
+            switchTab('comunidades');
+            document.getElementById('comm-search-input').value = query;
+            filterCommunities();
+        }
+
+        // Modals management
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        // Edit Profile Submission
+        function saveProfileEdits(e) {
+            e.preventDefault();
+            state.user.name = document.getElementById('edit-name').value;
+            state.user.location = document.getElementById('edit-location').value;
+            state.user.relationship = document.getElementById('edit-relationship').value;
+            state.user.bio = document.getElementById('edit-bio').value;
+            state.user.interests = document.getElementById('edit-interests').value;
+
+            saveState();
+            closeModal('edit-profile-modal');
+            renderProfileData();
+        }
+
+        function savePhotoUrl() {
+            const url = document.getElementById('photo-url-input').value.trim();
+            if (url) {
+                state.user.photo = url;
+                saveState();
+                closeModal('edit-photo-modal');
+                renderProfileData();
+            }
+        }
+    </script>
+</body>
+</html>
